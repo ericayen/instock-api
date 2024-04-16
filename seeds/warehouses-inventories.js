@@ -1,9 +1,16 @@
 const warehouseData = require("../seed-data/warehouses");
 const inventoryData = require("../seed-data/inventories");
 
-exports.seed = async function (knex) {
-  await knex("inventory").del();
-  await knex("warehouse").del();
-  await knex("warehouse").insert(warehouseData);
-  await knex("inventory").insert(inventoryData);
+exports.seed = function (knex) {
+  return knex("inventory")
+    .del()
+    .then(function () {
+      return knex("warehouse").del();
+    })
+    .then(function () {
+      return knex("warehouse").insert(warehouseData);
+    })
+    .then(() => {
+      return knex("inventory").insert(inventoryData);
+    });
 };
