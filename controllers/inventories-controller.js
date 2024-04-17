@@ -23,7 +23,7 @@ const addInventoryItem = async (req, res) => {
     (status === "In Stock" && quantity === 0) ||
     (status === "Out of Stock" && quantity !== 0)
   ) {
-    return res.status(400).json({ message: "Stock status must matche quantity" });
+    return res.status(400).json({ message: "Stock status must match quantity" });
   }
 
   // Check if the warehouse exists
