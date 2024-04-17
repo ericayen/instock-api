@@ -8,7 +8,7 @@ const app = express();
 const knex = require("knex");
 
 const inventoriesRoute = require("./routes/inventories");
-const warehousesRoute = require("./routes/");
+const warehousesRoute = require("./routes/warehouses");
 
 //defining middlewares
 app.use(cors());
