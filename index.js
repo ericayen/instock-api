@@ -6,10 +6,6 @@ const express = require("express");
 const app = express();
 
 const knex = require("knex");
-const knexConfig = require("./config/knexfile");
-
-// Initialize Knex instance
-const db = knex(knexConfig.development);
 
 //defining middlewares
 app.use(cors());
