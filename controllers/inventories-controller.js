@@ -163,4 +163,5 @@ const deleteInventoryItem = async (req, res) => {
 module.exports = {
   addInventoryItem,
   editInventoryItem,
+  deleteInventoryItem,
 };
