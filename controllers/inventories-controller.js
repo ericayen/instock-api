@@ -40,18 +40,16 @@ const addInventoryItem = async (req, res) => {
       return res.status(400).json({ message: "Warehouse not found" });
     }
 
-    // Check if same inventory exists
-    const duplicates = await knex("inventories")
-      .where({
-        item_name: item_name,
-        warehouse_id: warehouse_id,
-      })
-      .first();
-    if (duplicates) {
-      return res
-        .status(400)
-        .json({ message: "Inventory item already exists in this warehouse" });
-    }
+  // Check if same inventory exists 
+  const duplicates = await knex("inventories")
+    .where({
+      item_name: item_name,
+      warehouse_id: warehouse_id,
+    })
+    .first();
+  if (duplicates) {
+    return res.status(400).json({ message: "Inventory already exists in this warehouse" });
+  }
 
     // Insert new inventory into the database
     const newInventory = await knex("inventories").insert({
@@ -68,9 +66,7 @@ const addInventoryItem = async (req, res) => {
 
     res.status(201).json(insertedInventory);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to add new inventory item", error: error });
+    res.status(500).json({ message: "Failed to add new inventory", error: error });
   }
 };
 
@@ -142,9 +138,30 @@ const editInventoryItem = async (req, res) => {
         error: error.message,
       });
   }
-};
+}
+
+const deleteInventoryItem = async (req, res) => {
+  try {
+    // Check if the inventory item exists
+    const inventory = await knex('inventories')
+      .where({ id: req.params.id })
+      .first();
+    if (!inventory) {
+      return res.status(404).json({ message: 'Inventory not found' });
+    }
+
+    await knex("inventories").where({ id: req.params.id }).del();
+
+    res.status(204).end();
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Failed to delete inventory item', error: error.message });
+  }
+}
 
 module.exports = {
   addInventoryItem,
   editInventoryItem,
+  deleteInventoryItem,
 };
