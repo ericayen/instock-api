@@ -14,7 +14,7 @@ const warehousesRoute = require("./routes/warehouses");
 app.use(cors());
 app.use(express.json());
 
-app.use("./inventories", inventoriesRoute);
+app.use("/inventories", inventoriesRoute);
 app.use("/warehouses", warehousesRoute);
 
 app.listen(PORT, () => {
