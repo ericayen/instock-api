@@ -9,7 +9,7 @@ router.route("/")
 router.route("/:id")
   .get(warehousesController.getWarehouseItem)
   .put(warehousesController.editWarehouse)
-//   .delete (warehousesController.deleteWarehouse);
+  .delete (warehousesController.deleteWarehouse);
 
 router.route("/:id/inventories")
   .get(warehousesController.inventoriesByWarehouseId);
