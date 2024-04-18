@@ -9,6 +9,52 @@ const getWarehouseList = async (req, res) => {
   }
 };
 
+const addWarehouse = async (req, res) => {
+  const { warehouse_name, address, city, country, contact_name, contact_position, contact_phone, contact_email } = req.body;
+  if (
+    !warehouse_name ||
+    !address ||
+    !city ||
+    !country ||
+    !contact_name ||
+    !contact_position ||
+    !contact_phone ||
+    !contact_email
+  ) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+  if (
+    contact_email.indexOf("@") === -1
+  ) {
+    return res.status(400).json({ message: "Email must be valid" });
+  }
+  if (
+    contact_phone.match(/\d/g)?.length !== 10 &&
+    contact_phone.match(/\d/g)?.length !== 11
+  ) {
+    return res.status(400).json({ message: "Phone number must be valid" });
+  }
+
+  // const warehouseList = getWarehouseList();
+  const warehouseData = req.body;
+  const newWarehouse = {
+    warehouse_name: warehouseData.warehouse_name, 
+    address: warehouseData.address, 
+    city: warehouseData.city, 
+    country: warehouseData.country, 
+    contact_name: warehouseData.contact_name, 
+    contact_position: warehouseData.contact_position, 
+    contact_phone: warehouseData.contact_phone, 
+    contact_email: warehouseData.contact_email
+  }
+  try {
+    const insertWarehouse = await knex("warehouses").insert(newWarehouse);
+    res.status(201).json(insertWarehouse)
+  } catch (err) {
+    res.status(400).json({ message: `Error adding warehouse`, error: `${err}` });
+  }
+};
+
 const getWarehouseItem = async (req, res) => {
   try {
     const data = await knex('warehouses')
@@ -47,6 +93,7 @@ const inventoriesByWarehouseId = async (req, res) => {
 
 module.exports = {
   getWarehouseList,
+  addWarehouse,
   getWarehouseItem,
   inventoriesByWarehouseId,
-};
+}

@@ -4,7 +4,7 @@ const warehousesController = require("../controllers/warehouses-controller");
 
 router.route("/")
   .get(warehousesController.getWarehouseList)
-//   .post(warehousesController.addWarehouse)
+  .post(warehousesController.addWarehouse)
 
 router.route("/:id")
   .get(warehousesController.getWarehouseItem)
