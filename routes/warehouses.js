@@ -6,8 +6,8 @@ router.route("/")
   .get(warehousesController.getWarehouseList)
 //   .post(warehousesController.addWarehouse)
 
-// router.route("/:id")
-//   .get
+router.route("/:id")
+  .get(warehousesController.getWarehouseItem)
 //   .put(warehousesController.editWarehouse)
 //   .delete (warehousesController.deleteWarehouse);
 
