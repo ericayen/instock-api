@@ -3,6 +3,7 @@ const router = express.Router();
 const inventoriesController = require("../controllers/inventories-controller");
 
 router.route("/")
+  .get(inventoriesController.getInventoryList)
   .post(inventoriesController.addInventoryItem)
 
 router.route("/:id")

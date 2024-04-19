@@ -134,5 +134,5 @@ module.exports = {
   editWarehouse,
   deleteWarehouse,
   getWarehouseItem,
-  inventoriesByWarehouseId,
+  inventoriesByWarehouseId
 }
