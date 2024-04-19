@@ -160,6 +160,20 @@ const deleteInventoryItem = async (req, res) => {
   }
 }
 
+const getInventoryItem = async (req, res) => {
+  try {
+    const data = await knex('inventories')
+    .where({id: req.params.id}) 
+    .first(); 
+    if (!data) {
+      return res.status(404).json({ message: `Inventory ID ${req.params.id } not found` });
+  }
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(400).json({ message: `Error retrieving inventory ID ${req.params.id}`, error: `${err}` });
+  }
+}
+
 const getInventoryList = async (req, res) => {
   try {
     const data = await knex('inventories')
@@ -169,10 +183,10 @@ const getInventoryList = async (req, res) => {
   }
 };
 
-
 module.exports = {
   addInventoryItem,
   editInventoryItem,
   deleteInventoryItem,
+  getInventoryItem,
   getInventoryList
 };
