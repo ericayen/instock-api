@@ -174,9 +174,19 @@ const getInventoryItem = async (req, res) => {
   }
 }
 
+const getInventoryList = async (req, res) => {
+  try {
+    const data = await knex('inventories')
+    res.status(200).json(data);
+  } catch(err) {
+    res.status(400).json(`Error retrieving inventories: ${err}`)
+  }
+};
+
 module.exports = {
   addInventoryItem,
   editInventoryItem,
   deleteInventoryItem,
-  getInventoryItem
+  getInventoryItem,
+  getInventoryList
 };
