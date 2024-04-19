@@ -126,6 +126,15 @@ const inventoriesByWarehouseId = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: `Error retrieving inventory for warehouse ID ${req.params.id}`, error: `${err}` });
   }
+
+  const getInventoryList = async (req, res) => {
+    try {
+      const data = await knex('inventories')
+      res.status(200).json(data);
+    } catch(err) {
+      res.status(400).json(`Error retrieving inventories: ${err}`)
+    }
+  };
 }
 
 module.exports = {
@@ -135,4 +144,5 @@ module.exports = {
   deleteWarehouse,
   getWarehouseItem,
   inventoriesByWarehouseId,
+  getInventoryList
 }
