@@ -37,7 +37,7 @@ const addInventoryItem = async (req, res) => {
       .where({ id: warehouse_id })
       .first();
     if (!warehouseExists) {
-      return res.status(400).json({ message: "Warehouse not found" });
+      return res.status(400).json({ message: `Warehouse ID ${warehouse_id} not found` });
     }
 
   // Check if same inventory exists 
@@ -48,7 +48,7 @@ const addInventoryItem = async (req, res) => {
     })
     .first();
   if (duplicates) {
-    return res.status(400).json({ message: "Inventory already exists in this warehouse" });
+    return res.status(400).json({ message: `Inventory ${item_name} already exists in this warehous ID ${warehouse_id} ` });
   }
 
     // Insert new inventory into the database
@@ -66,7 +66,7 @@ const addInventoryItem = async (req, res) => {
 
     res.status(201).json(insertedInventory);
   } catch (error) {
-    res.status(500).json({ message: "Failed to add new inventory", error: error });
+    res.status(500).json({ message: "Error adding new inventory", error: error });
   }
 };
 
@@ -106,7 +106,7 @@ const editInventoryItem = async (req, res) => {
     // Check if the inventory item exists
     const inventoryExists = await knex("inventories").where({ id }).first();
     if (!inventoryExists) {
-      return res.status(404).json({ message: "Inventory not found" });
+      return res.status(404).json({ message: `Inventory ID ${req.params.id} not found` });
     }
 
     // Check if the warehouse exists
@@ -114,7 +114,7 @@ const editInventoryItem = async (req, res) => {
       .where({ id: warehouse_id })
       .first();
     if (!warehouseExists) {
-      return res.status(400).json({ message: "Warehouse ID not found" });
+      return res.status(400).json({ message: `Warehouse ID ${warehouse_id} not found` });
     }
 
     // Update the inventory item
@@ -134,7 +134,7 @@ const editInventoryItem = async (req, res) => {
     res
       .status(500)
       .json({
-        message: "Failed to update inventory item",
+        message: `Error updating inventory ID ${req.params.id}`,
         error: error.message,
       });
   }
@@ -156,7 +156,7 @@ const deleteInventoryItem = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Failed to delete inventory item', error: error.message });
+      .json({ message: `Error deleting inventory ID ${req.params.id}`, error: error.message });
   }
 }
 
